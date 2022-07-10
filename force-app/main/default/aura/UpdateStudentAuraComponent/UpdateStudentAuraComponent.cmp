@@ -1,7 +1,7 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
 access="global"
 controller="SearchComController">
-<!-- <lightning:card title="Update Student">
+<lightning:card title="Update Student">
 <lightning:recordEditForm objectApiName="HocSinh__c" recordId="a045i000003jNzCAAU">
         <lightning:messages />
         <lightning:inputField aura:id="field" fieldName="HoHocSinh__c" />
@@ -17,6 +17,5 @@ controller="SearchComController">
             <lightning:button type="submit" label="Cập nhật" />
         </div>
     </lightning:recordEditForm>
-</lightning:card> -->
-<c:SearchComponent/>
+</lightning:card>
 </aura:component>

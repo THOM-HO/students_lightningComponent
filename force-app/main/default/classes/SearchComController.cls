@@ -6,20 +6,20 @@ public with sharing class SearchComController {
     }
     
     @AuraEnabled
-    public  static List<HocSinh__c> queryStudent(String lastName,Boolean isSort,String classId,Date startBirthday, Date endBirthday){
+    public  static List<HocSinh__c> queryStudent(String lastName,Boolean isSort,String classId,Date startBirthday, Date endBirthday ,Integer currentPage){
         try{
             String queryStudent='SELECT Id, MaHocSinh__c, HoHocSinh__c, TenHocSinh__c, NgaySinh__c, GioiTinh__c, Diem1__c, Diem2__c,Diem3__c, DiemTB__c,TinhTrang__c FROM  HocSinh__c';
             // rap điều kiện
             queryStudent= createStringQuery(queryStudent,lastName, classId, startBirthday, endBirthday );
-            System.debug('queryStudent'+queryStudent);
+           
             if(isSort){
                 queryStudent += ' ORDER BY TenHocSinh__c  ';
             }else{
                 queryStudent += ' ORDER BY TenHocSinh__c  DESC ';
             }
             queryStudent +=' LIMIT 5';
-            // Integer offsetNum= (LIMIT_ROW * (currentPage - 1));
-            // queryStudent += 'OFFSET '+offsetNum;
+            Integer offsetNum= (5 * (currentPage - 1));
+            queryStudent += 'OFFSET '+offsetNum;
             List<HocSinh__c> hs=  Database.query(queryStudent);
             return hs;
         }catch(Exception ex){
