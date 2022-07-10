@@ -1,0 +1,108 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global"
+                controller="SearchComController">
+                <aura:attribute name="searchCondition" type="String"/>
+
+                <aura:attribute name="students" type="Array[]"/>
+                
+                <!--init SF hỗ trợ sẽ gọi đầu tiên sau khi load page, gọi chạy hàm doInit-->
+                <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+            
+                <aura:handler name="reload_evt" event="c:student_reload_evt" action="{!c.handleReloadEvent}"/>
+                <lightning:input type="text" variant="label-hidden" value="{!v.searchCondition}" />
+                <br/>
+                <div>
+                    
+                    <lightning:button onclick="{!c.search}"
+                                      label="Search"
+                                      iconName="utility:search"
+                                      iconPosition="left"
+                                      variant="neutral"
+                                      type="submit"/>
+                    
+                    <lightning:button onclick="{!c.newStudent}"
+                                      label="New"
+                                      iconName="utility:new"
+                                      iconPosition="left"
+                                      variant="neutral"
+                                      class="slds-size_4-of-10"
+                                      type="submit"/>
+                    
+                </div>
+                
+                <br/>
+                
+                <table class="slds-table slds-no-row-hover slds-table_bordered">
+                    <colgroup>
+                        <col width="5%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="5%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                    </colgroup>
+                    <thead>
+                        <tr class="slds-text-heading_label">
+                            <th scope="col"> </th>
+                            <th scope="col">Họ</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Ngày sinh</th>
+                            <th scope="col">Giới tính</th>
+                            <th scope="col">Điểm 1</th>
+                            <th scope="col">Điểm 2</th>
+                            <th scope="col">Điểm 3</th>
+                            <th scope="col">Điểm TB</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.students}" var="item" indexVar="index">
+                            <tr>
+                                <td>
+                                   <lightning:input type="checkbox"  onclick="{!c.isCheck}"/>
+                                </td>
+                                <td>
+                                    {!item.HoHocSinh__c}
+                                </td>
+                                <td>
+                                    {!item.TenHocSinh__c}
+                                </td>
+                                <td>
+                                    {!item.NgaySinh__c}
+                                </td>
+                                <td>
+                                    {!item.GioiTinh__c}
+                                </td>
+                                <td>
+                                    {!item.Diem1__c}
+                                </td>
+                                <td>
+                                    {!item.Diem2__c}
+                                </td>
+                                <td>
+                                    {!item.Diem3__c}
+                                </td>
+                                <td>
+                                    {!item.DiemTB__c}
+                                </td>
+                                <td>
+                                    {!item.TinhTrang__c}
+                                </td>
+                                <td>
+                                    <lightning:buttonIcon name="{!item.Id}" onclick="{!c.editStudent}" size="small" iconName="utility:edit" alternativeText="Edit"/>
+                                    <lightning:buttonIcon name="{!item.Id}" onclick="{!c.deleteStudent}" size="small" iconName="utility:delete" alternativeText="Delete"/>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <c:CreateModalCustom aura:id="create_student_model" />
+                <c:EditModalCustom aura:id="edit_student_modal" />
+                <c:DeleteModalCustom aura:id="confirm_delete_modal" />
+</aura:component>
